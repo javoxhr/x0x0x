@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #01051f;
+    color: #fff !important;
+    height: 100%;
+}
+
+.container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+h1 {
+    margin: 20px;
+    color: #fff;
+}
+
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 10px;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0258c9;
+    border: 2px solid #ddd;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.cell.disabled {
+    cursor: not-allowed;
+    color: #bbb;
+}
+
+.status {
+    font-weight: 600;
+    margin-top: 20px;
+    font-size: 22px;
+    color: #ffffff;
+}
+
+.class-for-x {
+    font-weight: 600;
+    font-size: 45px;
+}
+
+.reload-top-btn {
+    width: 40px;
+    border: none;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.play-again-button-wrapper {
+    margin-top: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-again-button-wrapper button {
+    color: #fff;
+    background: #0258c9;
+    border: none;
+    font-family: sans-serif;
+    font-weight: 600;
+    width: 200px;
+    height: 60px;
+    border-radius: 5px;
+    font-size: 20px;
+    animation: btn-anim .5s infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.play-again-button-wrapper button:active {
+    opacity: 0.8;
+}
+
+@keyframes btn-anim {
+    from {
+        width: 205px;
+        height: 65px;
+    }
+     to {
+        width: 200px;
+        height: 60px;
+    }
+}

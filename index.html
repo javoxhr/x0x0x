@@ -3,137 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Крестики-Нолики</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f9f9f9;
-        }
-
-        h1 {
-            margin: 20px;
-            color: #333;
-        }
-
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-gap: 10px;
-            justify-content: center;
-            margin: 20px auto;
-        }
-
-        .cell {
-            width: 100px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            border: 2px solid #ddd;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .cell.disabled {
-            cursor: not-allowed;
-            color: #bbb;
-        }
-
-        .status {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #555;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <h1>Крестики-Нолики</h1>
-    <div class="board" id="board"></div>
-    <div class="status" id="status">Подключение...</div>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <button class="reload-top-btn" onclick="window.location.reload()"><img src="./reload.svg" alt=""></button>
+        <div class="board" id="board">
+        </div>
+        <div class="status" id="status">Подключение...</div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyA3csFmPhTfAFfYZfhOFQ_QN-zEV8aRlKY",
-            authDomain: "x0x0-c8ed6.firebaseapp.com",
-            databaseURL: "https://x0x0-c8ed6-default-rtdb.firebaseio.com",
-            projectId: "x0x0-c8ed6",
-            storageBucket: "x0x0-c8ed6.appspot.com",
-            messagingSenderId: "675946173756",
-            appId: "1:675946173756:web:6e0ee354925496a7e7ba39",
-            measurementId: "G-Z66VJYF6QR"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const gameRef = ref(db, "games/game_id_1");
-
-        const board = document.getElementById("board");
-        const status = document.getElementById("status");
-
-        function createBoard(gameState) {
-            board.innerHTML = "";
-            gameState.board.forEach((cell, index) => {
-                const cellElement = document.createElement("div");
-                cellElement.classList.add("cell");
-                if (cell) {
-                    cellElement.textContent = cell;
-                    cellElement.classList.add("disabled");
-                }
-                cellElement.addEventListener("click", () => makeMove(index, gameState));
-                board.appendChild(cellElement);
-            });
-            status.textContent = gameState.winner
-                ? `Победитель: ${gameState.winner}`
-                : `Ход: ${gameState.currentPlayer}`;
-        }
-
-        function makeMove(index, gameState) {
-            if (gameState.board[index] || gameState.winner) return;
-
-            gameState.board[index] = gameState.currentPlayer;
-            gameState.currentPlayer = gameState.currentPlayer === "X" ? "O" : "X";
-
-            const winner = checkWinner(gameState.board);
-            if (winner) {
-                gameState.winner = winner;
-            }
-
-            set(gameRef, gameState);
-        }
-
-        function checkWinner(board) {
-            const winCombinations = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8],
-                [0, 3, 6], [1, 4, 7], [2, 5, 8],
-                [0, 4, 8], [2, 4, 6]
-            ];
-            for (const combo of winCombinations) {
-                const [a, b, c] = combo;
-                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                    return board[a];
-                }
-            }
-            return null;
-        }
-
-        onValue(gameRef, (snapshot) => {
-            const gameState = snapshot.val();
-            if (gameState) createBoard(gameState);
-        });
-
-        set(gameRef, {
-            board: Array(9).fill(""),
-            currentPlayer: "X",
-            winner: null
-        });
-    </script>
+        <div class="play-again-button-wrapper">
+            <button>Play again</button>
+        </div>
+    </div>
+    <script type="module" src="./game.js"></script>
 </body>
 
 </html>
